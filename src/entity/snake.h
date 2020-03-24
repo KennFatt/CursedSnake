@@ -8,6 +8,8 @@
 #include "entity.h"
 #include "food.h"
 
+class AppDelegate;
+
 /**
  * Snake class
  */
@@ -26,8 +28,8 @@ private:
     /** Store its body (tail) as a dynamic array of Vector2 */
     std::vector<Vector2> tail;
 
-    uint32_t* WINDOW_W;
-    uint32_t* WINDOW_H;
+    /** Pointer of application */
+    const AppDelegate* application;
 
 public:
     /**
@@ -35,7 +37,7 @@ public:
      *
      * @param ch Food character
      */
-    Snake(const char ch, uint32_t* _window_w, uint32_t* _window_h);
+    Snake(const char ch, const AppDelegate* app);
 
     /**
      * Get class's character.

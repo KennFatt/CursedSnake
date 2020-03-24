@@ -41,7 +41,7 @@ void AppDelegate::onSetup() {
     food = new Food('0');
     updateFoodPosition(food);
 
-    snake = new Snake('#', &WINDOW_W, &WINDOW_H);
+    snake = new Snake('#', this);
     snake->x = WINDOW_W / 2;
     snake->y = WINDOW_H / 2;
 
