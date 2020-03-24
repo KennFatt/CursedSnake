@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <vector>
 
-#include "../appdelegate.h"
 #include "../math/vector2.h"
 #include "entity.h"
 #include "food.h"
@@ -13,10 +12,11 @@
  * Snake class
  */
 class Snake : public Entity {
-private:
+public:
     /** Enum of Facing Direction */
     enum FacingDirection : uint16_t { NORTH, EAST, SOUTH, WEST };
 
+private:
     /** Current snake's direction */
     FacingDirection currentDirection = NORTH;
 
@@ -26,8 +26,8 @@ private:
     /** Store its body (tail) as a dynamic array of Vector2 */
     std::vector<Vector2> tail;
 
-    /** Pointer to main application */
-    const AppDelegate* application;
+    uint32_t* WINDOW_W;
+    uint32_t* WINDOW_H;
 
 public:
     /**
@@ -35,7 +35,7 @@ public:
      *
      * @param ch Food character
      */
-    Snake(const char ch, const AppDelegate* app);
+    Snake(const char ch, uint32_t* _window_w, uint32_t* _window_h);
 
     /**
      * Get class's character.
@@ -57,6 +57,11 @@ public:
      * @return bool
      */
     bool onEat(const Food& food);
+
+    /**
+     * Update snake's facing direction.
+     */
+    void updateDirection(const FacingDirection& newDirection);
 };
 
 #endif    // __SNAKE_H

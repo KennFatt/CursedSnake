@@ -1,9 +1,10 @@
 #include "snake.h"
 
-Snake::Snake(const char ch, const AppDelegate* app)
+Snake::Snake(const char ch, uint32_t* _window_w, uint32_t* _window_h)
     : Entity(ch, -1.0, -1.0) {
     length = 0;
-    application = app;
+    WINDOW_W = _window_w;
+    WINDOW_H = _window_h;
 }
 
 const char Snake::getCharacter() const {
@@ -20,16 +21,16 @@ void Snake::onTick() {
     }
 
     /** Border validation */
-    if (x > application->WINDOW_W) {
+    if (x > *WINDOW_W) {
         x = 0;
     } else if (x < 0) {
-        x = application->WINDOW_W - 1;
+        x = *WINDOW_W - 1;
     }
 
-    if (y > application->WINDOW_H) {
+    if (y > *WINDOW_H) {
         y = 0;
     } else if (y < 0) {
-        y = application->WINDOW_H - 1;
+        y = *WINDOW_H - 1;
     }
 }
 
@@ -40,4 +41,10 @@ bool Snake::onEat(const Food& food) {
     }
 
     return false;
+}
+
+void Snake::updateDirection(const FacingDirection& newDirection) {
+    if (currentDirection != newDirection) {
+        currentDirection = newDirection;
+    }
 }
