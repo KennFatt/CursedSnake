@@ -38,13 +38,16 @@ AppDelegate::AppDelegate() {
 
 // --------------------------- PRIVATE --------------------------
 void AppDelegate::onSetup() {
+    // spawn new food object
     food = new Food('0');
     updateFoodPosition(food);
 
+    // spawn the snake
     snake = new Snake('#', this);
     snake->x = WINDOW_W / 2;
     snake->y = WINDOW_H / 2;
 
+    // change state to run
     currentState = RUN;
 }
 
@@ -64,7 +67,8 @@ void AppDelegate::onRender() {
         mvaddch(food->y, food->x, food->getCharacter());
         refresh();
 
-        napms(125);
+        // TODO: Seperate movement speed on horizontal and vertical
+        napms(100);
         onKeyPressed();
     }
 }
@@ -72,19 +76,22 @@ void AppDelegate::onRender() {
 void AppDelegate::onKeyPressed() {
     switch (getch()) {
         case KEY_F(1): currentState = STOP; break;
-        case KEY_RESIZE: onWindowResize(&WINDOW_W, &WINDOW_H); break;
+        case KEY_RESIZE:
+            onWindowResize(&WINDOW_W, &WINDOW_H);
+            updateFoodPosition(food);
+            break;
         case 'W':
         case 'w':
-        case KEY_UP: snake->updateDirection(Snake::NORTH); break;
+        case KEY_UP: snake->updateDirection(FacingDirection::NORTH); break;
         case 'D':
         case 'd':
-        case KEY_RIGHT: snake->updateDirection(Snake::EAST); break;
+        case KEY_RIGHT: snake->updateDirection(FacingDirection::EAST); break;
         case 'S':
         case 's':
-        case KEY_DOWN: snake->updateDirection(Snake::SOUTH); break;
+        case KEY_DOWN: snake->updateDirection(FacingDirection::SOUTH); break;
         case 'A':
         case 'a':
-        case KEY_LEFT: snake->updateDirection(Snake::WEST); break;
+        case KEY_LEFT: snake->updateDirection(FacingDirection::WEST); break;
     }
 }
 

@@ -15,10 +15,10 @@ const char Snake::getCharacter() const {
 void Snake::onTick() {
     /** Update its position */
     switch (currentDirection) {
-        case NORTH: y--; break;
-        case EAST: x++; break;
-        case SOUTH: y++; break;
-        case WEST: x--; break;
+        case FacingDirection::NORTH: y--; break;
+        case FacingDirection::EAST: x++; break;
+        case FacingDirection::SOUTH: y++; break;
+        case FacingDirection::WEST: x--; break;
     }
 
     /** Border validation */
@@ -44,7 +44,12 @@ bool Snake::onEat(const Food& food) {
     return false;
 }
 
-void Snake::updateDirection(const FacingDirection& newDirection) {
+FacingDirection::WindDirection Snake::getDirection() const {
+    return currentDirection;
+}
+
+void Snake::updateDirection(
+   const FacingDirection::WindDirection& newDirection) {
     if (currentDirection != newDirection) {
         currentDirection = newDirection;
     }

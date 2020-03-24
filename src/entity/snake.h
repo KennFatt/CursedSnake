@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "../math/facingdirection.h"
 #include "../math/vector2.h"
 #include "entity.h"
 #include "food.h"
@@ -18,13 +19,9 @@ class AppDelegate;
  * Snake class
  */
 class Snake : public Entity {
-public:
-    /** Enum of Facing Direction */
-    enum FacingDirection : uint16_t { NORTH, EAST, SOUTH, WEST };
-
 private:
     /** Current snake's direction */
-    FacingDirection currentDirection = NORTH;
+    FacingDirection::WindDirection currentDirection = FacingDirection::NORTH;
 
     /** Total length of its body */
     uint32_t length;
@@ -65,9 +62,16 @@ public:
     bool onEat(const Food& food);
 
     /**
+     * Get current snake's facing direction.
+     *
+     * @return FacingDirection::WindDirection&
+     */
+    FacingDirection::WindDirection getDirection() const;
+
+    /**
      * Update snake's facing direction.
      */
-    void updateDirection(const FacingDirection& newDirection);
+    void updateDirection(const FacingDirection::WindDirection& newDirection);
 };
 
 #endif    // __SNAKE_H
