@@ -3,6 +3,9 @@
 
 #include <cstdint>
 
+#include "entity/food.h"
+#include "entity/snake.h"
+
 /**
  * Class AppDelegate
  *
@@ -10,6 +13,11 @@
  */
 class AppDelegate {
 public:
+    /** WINDOW_W is a console Width */
+    uint32_t WINDOW_W;
+    /** WINDOW_H is a console Height */
+    uint32_t WINDOW_H;
+
     /**
      * Constructor will build and initialize `stdscr` from ncurses,
      * then continue the game flow.
@@ -32,6 +40,22 @@ private:
 
     /** State indicator */
     GameState currentState = LOAD;
+
+    /** Food object */
+    Food *food;
+
+    /** Snake object */
+    Snake *snake;
+
+    /**
+     * Delta time for renderer to render next buffer.
+     * This value represented as milisecond (ms).
+     *
+     * The rendering system scenario would be look like this:
+     *  Buffer -> flush -> pause deltaTime -> buffer -> flush -> pause ...
+     * Till exit signal is interrupted.
+     */
+    uint16_t deltaTime = 500;
 
     /**
      * Setup all used object before it got rendered to the main screen.
