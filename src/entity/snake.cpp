@@ -13,6 +13,13 @@ const char Snake::getCharacter() const {
 }
 
 void Snake::onTick() {
+    /** Preparing for its tail */
+    if (tail.size() > 0) {
+        for (int i = 0; i < tail.size() - 1; i++) {
+            tail[i] = tail[i + 1];
+        }
+    }
+
     /** Update its position */
     switch (currentDirection) {
         case FacingDirection::NORTH: y--; break;
@@ -38,10 +45,15 @@ void Snake::onTick() {
 bool Snake::onEat(const Food& food) {
     if (distance(food) <= 0) {
         length++;
+        tail.emplace_back(x, y);
         return true;
     }
 
     return false;
+}
+
+std::vector<Vector2>& Snake::getTail() {
+    return tail;
 }
 
 FacingDirection::WindDirection Snake::getDirection() const {

@@ -61,6 +61,8 @@ public:
      */
     bool onEat(const Food& food);
 
+    std::vector<Vector2>& getTail();
+
     /**
      * Get current snake's facing direction.
      *

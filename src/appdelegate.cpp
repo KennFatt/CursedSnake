@@ -62,18 +62,30 @@ void AppDelegate::onRender() {
         clear();
 
         // render single snake
-        mvaddch(snake->y, snake->x, snake->getCharacter());
         if (snake->onEat(*food)) {
             points++;
             updateFoodPosition(food);
         }
         snake->onTick();
+        for (auto& tail : snake->getTail()) {
+            mvprintw(2, 0, "Rendering tail at: %lf, %lf", tail.x, tail.y);
+            mvaddch(tail.y, tail.x, snake->getCharacter());
+        }
+        mvaddch(snake->y, snake->x, snake->getCharacter());
+
+        // render snake tail
+        // for (int i = 0; i < snake->getTail().size(); i++) {
+        //     auto& currentTail = snake->getTail()[i];
+        //     mvaddch(currentTail.y, currentTail.x, snake->getCharacter());
+        // }
 
         // Render food
         mvaddch(food->y, food->x, food->getCharacter());
 
         // Render points
         mvprintw(0, 0, "Points: %d", points);
+        // debug
+        mvprintw(1, 0, "Total tail: %d", snake->getTail().size());
 
         refresh();
         if (snake->getDirection() == FacingDirection::NORTH
