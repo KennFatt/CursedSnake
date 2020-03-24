@@ -6,6 +6,7 @@ Snake::Snake(const char ch, const AppDelegate* app)
     : Entity(ch, -1.0, -1.0) {
     length = 0;
     application = app;
+    parts.push_back(Vector2(getX(), getY()));
 }
 
 const char Snake::getCharacter() const {
@@ -13,47 +14,47 @@ const char Snake::getCharacter() const {
 }
 
 void Snake::onTick() {
-    /** Preparing for its tail */
-    if (tail.size() > 0) {
-        for (int i = 0; i < tail.size() - 1; i++) {
-            tail[i] = tail[i + 1];
-        }
-    }
-
     /** Update its position */
     switch (currentDirection) {
-        case FacingDirection::NORTH: y--; break;
-        case FacingDirection::EAST: x++; break;
-        case FacingDirection::SOUTH: y++; break;
-        case FacingDirection::WEST: x--; break;
+        case FacingDirection::NORTH:
+            parts.insert(parts.begin(), Vector2(parts[0].x, parts[0].y - 1));
+            break;
+        case FacingDirection::EAST:
+            parts.insert(parts.begin(), Vector2(parts[0].x + 1, parts[0].y));
+            break;
+        case FacingDirection::SOUTH:
+            parts.insert(parts.begin(), Vector2(parts[0].x, parts[0].y + 1));
+            break;
+        case FacingDirection::WEST:
+            parts.insert(parts.begin(), Vector2(parts[0].x - 1, parts[0].y));
+            break;
     }
 
     /** Border validation */
-    if (x > application->WINDOW_W) {
-        x = 0;
-    } else if (x < 0) {
-        x = application->WINDOW_W - 1;
+    if (parts[0].x > application->WINDOW_W) {
+        parts[0].x = 0;
+    } else if (parts[0].x < 0) {
+        parts[0].x = application->WINDOW_W - 1;
     }
 
-    if (y > application->WINDOW_H) {
-        y = 0;
-    } else if (y < 0) {
-        y = application->WINDOW_H - 1;
+    if (parts[0].y > application->WINDOW_H) {
+        parts[0].y = 0;
+    } else if (parts[0].y < 0) {
+        parts[0].y = application->WINDOW_H - 1;
     }
 }
 
 bool Snake::onEat(const Food& food) {
-    if (distance(food) <= 0) {
+    if (parts[0].distance(food) <= 0) {
         length++;
-        tail.emplace_back(x, y);
         return true;
     }
 
     return false;
 }
 
-std::vector<Vector2>& Snake::getTail() {
-    return tail;
+std::vector<Vector2>& Snake::getParts() {
+    return parts;
 }
 
 FacingDirection::WindDirection Snake::getDirection() const {

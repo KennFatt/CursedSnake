@@ -58,8 +58,8 @@ private:
      *  Buffer -> flush -> pause deltaTime -> buffer -> flush -> pause ...
      * Till exit signal is interrupted.
      */
-    const uint16_t DELTA_TIME_HORIZONTAL = 200;
-    const uint16_t DELTA_TIME_VERTICAL = 225;
+    // const uint16_t DELTA_TIME_HORIZONTAL = 200;
+    // const uint16_t DELTA_TIME_VERTICAL = 225;
 
     /**
      * Setup all used object before it got rendered to the main screen.

@@ -1,6 +1,7 @@
 #include "appdelegate.h"
 
 #include <ncurses.h>
+#include <unistd.h>
 
 #include <cstdlib>
 #include <ctime>
@@ -58,43 +59,38 @@ void AppDelegate::onSetup() {
 
 void AppDelegate::onRender() {
     while (currentState == RUN) {
+        // if (snake->getDirection() == FacingDirection::NORTH
+        //     || snake->getDirection() == FacingDirection::SOUTH) {
+        //     napms(DELTA_TIME_VERTICAL);
+        // } else {
+        //     napms(DELTA_TIME_HORIZONTAL);
+        // }
+
         // Clear previous screen.
-        clear();
+        erase();
 
         // render single snake
+        auto& snakeParts = snake->getParts();
         if (snake->onEat(*food)) {
             points++;
             updateFoodPosition(food);
+        } else {
+            snake->getParts().pop_back();
         }
         snake->onTick();
-        for (auto& tail : snake->getTail()) {
-            mvprintw(2, 0, "Rendering tail at: %lf, %lf", tail.x, tail.y);
-            mvaddch(tail.y, tail.x, snake->getCharacter());
+        for (auto& vectors : snakeParts) {
+            mvaddch(vectors.y, vectors.x, snake->getCharacter());
         }
-        mvaddch(snake->y, snake->x, snake->getCharacter());
-
-        // render snake tail
-        // for (int i = 0; i < snake->getTail().size(); i++) {
-        //     auto& currentTail = snake->getTail()[i];
-        //     mvaddch(currentTail.y, currentTail.x, snake->getCharacter());
-        // }
 
         // Render food
         mvaddch(food->y, food->x, food->getCharacter());
 
         // Render points
         mvprintw(0, 0, "Points: %d", points);
-        // debug
-        mvprintw(1, 0, "Total tail: %d", snake->getTail().size());
-
         refresh();
-        if (snake->getDirection() == FacingDirection::NORTH
-            || snake->getDirection() == FacingDirection::SOUTH) {
-            napms(DELTA_TIME_VERTICAL);
-        } else {
-            napms(DELTA_TIME_HORIZONTAL);
-        }
         onKeyPressed();
+
+        usleep(110000);    // TODO
     }
 }
 

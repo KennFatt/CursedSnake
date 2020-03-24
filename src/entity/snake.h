@@ -26,8 +26,8 @@ private:
     /** Total length of its body */
     uint32_t length;
 
-    /** Store its body (tail) as a dynamic array of Vector2 */
-    std::vector<Vector2> tail;
+    /** Store its body (parts) as a dynamic array of Vector2 */
+    std::vector<Vector2> parts;
 
     /** Pointer of application */
     const AppDelegate* application;
@@ -61,7 +61,7 @@ public:
      */
     bool onEat(const Food& food);
 
-    std::vector<Vector2>& getTail();
+    std::vector<Vector2>& getParts();
 
     /**
      * Get current snake's facing direction.
