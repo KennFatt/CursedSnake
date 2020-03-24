@@ -1,0 +1,4 @@
+# Exclude all files inside `out/` directory
+out/obj/*
+out/*_build
+out/*.exe
