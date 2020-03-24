@@ -47,6 +47,9 @@ private:
     /** Snake object */
     Snake *snake;
 
+    /** Total points achived by the player */
+    uint32_t points;
+
     /**
      * Delta time for renderer to render next buffer.
      * This value represented as milisecond (ms).

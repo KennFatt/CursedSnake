@@ -12,8 +12,10 @@ void onWindowResize(uint32_t* _w, uint32_t* _h) {
 }
 
 void updateFoodPosition(Food* food) {
+    /** Randomize: 0 ... COLS */
     food->x = rand() % COLS;
-    food->y = rand() % LINES;
+    /** Randomize: 1 ... LINES - 1 */
+    food->y = rand() % (LINES - 1) + 1;
 }
 
 // --------------------------- PUBLIC ---------------------------
@@ -38,6 +40,9 @@ AppDelegate::AppDelegate() {
 
 // --------------------------- PRIVATE --------------------------
 void AppDelegate::onSetup() {
+    // Set default point to 0
+    points = 0;
+
     // spawn new food object
     food = new Food('0');
     updateFoodPosition(food);
@@ -53,20 +58,24 @@ void AppDelegate::onSetup() {
 
 void AppDelegate::onRender() {
     while (currentState == RUN) {
+        // Clear previous screen.
         clear();
 
         // render single snake
         mvaddch(snake->y, snake->x, snake->getCharacter());
         if (snake->onEat(*food)) {
-            // TODO: Add points
+            points++;
             updateFoodPosition(food);
         }
         snake->onTick();
 
         // Render food
         mvaddch(food->y, food->x, food->getCharacter());
-        refresh();
 
+        // Render points
+        mvprintw(0, 0, "Points: %d", points);
+
+        refresh();
         if (snake->getDirection() == FacingDirection::NORTH
             || snake->getDirection() == FacingDirection::SOUTH) {
             napms(DELTA_TIME_VERTICAL);

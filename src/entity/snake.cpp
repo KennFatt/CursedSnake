@@ -50,7 +50,17 @@ FacingDirection::WindDirection Snake::getDirection() const {
 
 void Snake::updateDirection(
    const FacingDirection::WindDirection& newDirection) {
-    if (currentDirection != newDirection) {
+    if (currentDirection == FacingDirection::NORTH
+        && newDirection != FacingDirection::SOUTH) {
+        currentDirection = newDirection;
+    } else if (currentDirection == FacingDirection::SOUTH
+               && newDirection != FacingDirection::NORTH) {
+        currentDirection = newDirection;
+    } else if (currentDirection == FacingDirection::EAST
+               && newDirection != FacingDirection::WEST) {
+        currentDirection = newDirection;
+    } else if (currentDirection == FacingDirection::WEST
+               && newDirection != FacingDirection::EAST) {
         currentDirection = newDirection;
     }
 }
