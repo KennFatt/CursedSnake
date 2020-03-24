@@ -12,9 +12,15 @@ OUT_OBJECT_FOLDER = out/obj
 # Execute file name
 OUT_EXECUTE_FILE = cursedsnake_build
 
-all: main.o appdelegate.o vector2.o
+all: main.o appdelegate.o vector2.o food.o snake.o
 	${CXX} ${CXX_FLAGS} -o ${OUT_EXECUTE_FOLDER}/${OUT_EXECUTE_FILE} \
 	${OUT_OBJECT_FOLDER}/*.o -l${LIBRARY}
+
+snake.o: src/entity/snake.cpp src/entity/snake.h src/entity/entity.h
+	${CXX} ${CXX_FLAGS} -c -o ${OUT_OBJECT_FOLDER}/$@ $<
+
+food.o: src/entity/food.cpp src/entity/food.h src/entity/entity.h
+	${CXX} ${CXX_FLAGS} -c -o ${OUT_OBJECT_FOLDER}/$@ $<
 
 vector2.o: src/math/vector2.cpp src/math/vector2.h
 	${CXX} ${CXX_FLAGS} -c -o ${OUT_OBJECT_FOLDER}/$@ $<
