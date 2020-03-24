@@ -58,7 +58,7 @@ void AppDelegate::onRender() {
         // render single snake
         mvaddch(snake->y, snake->x, snake->getCharacter());
         if (snake->onEat(*food)) {
-            deltaTime -= 25;
+            // TODO: Add points
             updateFoodPosition(food);
         }
         snake->onTick();
@@ -67,8 +67,12 @@ void AppDelegate::onRender() {
         mvaddch(food->y, food->x, food->getCharacter());
         refresh();
 
-        // TODO: Seperate movement speed on horizontal and vertical
-        napms(100);
+        if (snake->getDirection() == FacingDirection::NORTH
+            || snake->getDirection() == FacingDirection::SOUTH) {
+            napms(DELTA_TIME_VERTICAL);
+        } else {
+            napms(DELTA_TIME_HORIZONTAL);
+        }
         onKeyPressed();
     }
 }
