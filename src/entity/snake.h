@@ -8,6 +8,10 @@
 #include "entity.h"
 #include "food.h"
 
+/**
+ * Empty class to prevent circular dependencies.
+ * @link https://stackoverflow.com/q/625799/6569706
+ */
 class AppDelegate;
 
 /**
