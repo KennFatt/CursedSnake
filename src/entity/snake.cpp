@@ -53,6 +53,10 @@ bool Snake::onEat(const Food& food) {
     return false;
 }
 
+bool Snake::hasCollisionWith(const unsigned& partsIndex) {
+    return partsIndex != 0 && parts[0].distance(parts[partsIndex]) <= 0;
+}
+
 std::vector<Vector2>& Snake::getParts() {
     return parts;
 }

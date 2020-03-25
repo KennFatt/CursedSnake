@@ -35,6 +35,7 @@ private:
 public:
     /**
      * Create new snake instance.
+     * TODO: Remove param app
      *
      * @param ch Food character
      */
@@ -61,6 +62,20 @@ public:
      */
     bool onEat(const Food& food);
 
+    /**
+     * Check if its head had collision with its body parts.
+     *
+     * @param partsIndex Index of body parts.
+     *
+     * @return bool
+     */
+    bool hasCollisionWith(const unsigned& partsIndex);
+
+    /**
+     * Get snake body parts.
+     *
+     * @return std::vector<Vector2>&
+     */
     std::vector<Vector2>& getParts();
 
     /**
