@@ -18,6 +18,9 @@ public:
     /** WINDOW_H is a console Height */
     uint32_t WINDOW_H;
 
+    uint32_t WINDOW_W_CENTER;
+    uint32_t WINDOW_H_CENTER;
+
     /**
      * Constructor will build and initialize `stdscr` from ncurses,
      * then continue the game flow.
@@ -26,6 +29,7 @@ public:
      *  1. onSetup()
      *  2. onRender()
      *      2.a onKeyPressed()
+     *      2.b onGameOver()
      *  3. onDestroy()
      */
     AppDelegate();
@@ -36,7 +40,7 @@ private:
      *
      * @type uint16_t
      */
-    enum GameState : uint16_t { LOAD, RUN, STOP };
+    enum GameState : uint16_t { LOAD, RUN, STOP, HALT };
 
     /** State indicator */
     GameState currentState = LOAD;
@@ -50,16 +54,19 @@ private:
     /** Total points achived by the player */
     uint32_t points;
 
+    bool isBannerShown;
+
     /**
-     * Delta time for renderer to render next buffer.
-     * This value represented as milisecond (ms).
+     * Delta time for renderer to render next buffer (frame).
+     * This value represented as microsecond (usec).
      *
      * The rendering system scenario would be look like this:
      *  Buffer -> flush -> pause deltaTime -> buffer -> flush -> pause ...
      * Till exit signal is interrupted.
      */
-    // const uint16_t DELTA_TIME_HORIZONTAL = 200;
-    // const uint16_t DELTA_TIME_VERTICAL = 225;
+    const uint32_t RENDER_DELTA_TIME = 110000;
+
+    void showBanner();
 
     /**
      * Setup all used object before it got rendered to the main screen.
@@ -77,6 +84,11 @@ private:
      * This function triggered when AppDelegate::onRender() got called.
      */
     void onKeyPressed();
+
+    /**
+     * Trigerring a game over state and stop the game.
+     */
+    void onGameOver();
 
     /**
      * Finally, clean-up all the mess or garbage.
