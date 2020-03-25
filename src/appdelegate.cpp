@@ -63,6 +63,8 @@ AppDelegate::AppDelegate() {
 
 // --------------------------- PRIVATE --------------------------
 void AppDelegate::showBanner() {
+    const std::array<const char*, 3> authors = {
+       "Arvito Putra", "Kennan Fattahillah", "Sahla Dzulfika"};
     const std::array<const char*, 6> ascii = {
        "   ___                        _   __             _        ",
        "  / __\\   _ _ __ ___  ___  __| | / _\\_ __   __ _| | _____ ",
@@ -82,6 +84,13 @@ void AppDelegate::showBanner() {
     mvprintw(WINDOW_H_CENTER, WINDOW_W_CENTER - 14,
              "Please enter to continue...");
     attroff(A_BLINK | COLOR_PAIR(2));
+
+    attron(A_UNDERLINE);
+    mvprintw(WINDOW_H_CENTER + 3, WINDOW_W_CENTER - 6, "Developed by:");
+    attroff(A_UNDERLINE);
+    mvprintw(WINDOW_H_CENTER + 5, WINDOW_W_CENTER - 6, authors[0]);
+    mvprintw(WINDOW_H_CENTER + 6, WINDOW_W_CENTER - 9, authors[1]);
+    mvprintw(WINDOW_H_CENTER + 7, WINDOW_W_CENTER - 7, authors[2]);
     refresh();
 
     if (getch() == KEY_ENTER) {
@@ -115,6 +124,7 @@ void AppDelegate::onRender() {
         erase();
 
         // Show banner
+        // TODO: What would happend if there is no more space to print ASCII?
         if (!isBannerShown) {
             showBanner();
             continue;
@@ -184,8 +194,42 @@ void AppDelegate::onKeyPressed() {
 }
 
 void AppDelegate::onGameOver() {
+    erase();
+    const std::array<const char*, 6> ascii = {
+       "                                          __ ",
+       " _____                  _____            |  |",
+       "|   __|___ _____ ___   |     |_ _ ___ ___|  |",
+       "|  |  | .'|     | -_|  |  |  | | | -_|  _|__|",
+       "|_____|__,|_|_|_|___|  |_____| \\_/|___|_| |__|",
+       "                                             "};
+
     currentState = HALT;
     while (currentState == HALT) {
+        if (WINDOW_W >= 46) {
+            for (unsigned i = 0; i < ascii.size(); i++) {
+                attron(A_BOLD | A_BLINK | COLOR_PAIR(3));
+                mvprintw((WINDOW_H_CENTER - 6) + i, WINDOW_W_CENTER - 23,
+                         ascii[i]);
+                attroff(A_BOLD | A_BLINK | COLOR_PAIR(3));
+            }
+        }
+        // TODO: What would happend if there is no more space to print ASCII?
+
+        attron(COLOR_PAIR(4));
+        mvprintw(WINDOW_H_CENTER + 2, WINDOW_W_CENTER - 12,
+                 "Total points earned: %ld", points);
+        attroff(COLOR_PAIR(4));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(WINDOW_H_CENTER + 4, WINDOW_W_CENTER - 12,
+                 "Please enter to exit...");
+        attroff(COLOR_PAIR(2));
+
+        if (getch() == KEY_ENTER) {
+            currentState = STOP;
+        }
+
+        refresh();
         usleep(RENDER_DELTA_TIME);
     }
 }
