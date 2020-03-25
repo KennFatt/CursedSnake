@@ -19,11 +19,11 @@ double Vector2::getY() {
 }
 
 int Vector2::getFloorX() {
-    return static_cast<int>(floorf64(x));
+    return static_cast<int>(std::floor(x));
 }
 
 int Vector2::getFloorY() {
-    return static_cast<int>(floorf64(y));
+    return static_cast<int>(std::floor(y));
 }
 
 Vector2 Vector2::add(const Vector2& vec) {
@@ -35,15 +35,15 @@ Vector2 Vector2::subtract(const Vector2& vec) {
 }
 
 Vector2 Vector2::ceil() {
-    return Vector2(ceilf64(x), ceilf64(y));
+    return Vector2(std::ceil(x), std::ceil(y));
 }
 
 Vector2 Vector2::floor() {
-    return Vector2(floorf64(x), floorf64(y));
+    return Vector2(std::floor(x), std::floor(y));
 }
 
 Vector2 Vector2::round() {
-    return Vector2(roundf64(x), roundf64(y));
+    return Vector2(std::round(x), std::round(y));
 }
 
 Vector2 Vector2::absolute() {
@@ -60,11 +60,11 @@ Vector2 Vector2::divide(const double& n) {
 }
 
 double Vector2::distance(const Vector2& vec) {
-    return sqrt(powf64(x - vec.x, 2.0) + powf64(y - vec.y, 2.0));
+    return std::sqrt(std::pow(x - vec.x, 2.0) + std::pow(y - vec.y, 2.0));
 }
 
 double Vector2::length() {
-    return sqrt((x * x) + (y * y));
+    return std::sqrt((x * x) + (y * y));
 }
 
 double Vector2::dot(const Vector2& vec) {
