@@ -6,7 +6,7 @@ Snake::Snake(const char ch, const AppDelegate* app)
     : Entity(ch, -1.0, -1.0) {
     length = 0;
     application = app;
-    parts.push_back(Vector2(getX(), getY()));
+    parts.push_back(Vector2(app->WINDOW_W_CENTER, app->WINDOW_H_CENTER));
 }
 
 const char Snake::getCharacter() const {
