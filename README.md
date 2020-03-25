@@ -18,7 +18,12 @@ sudo pacman -S ncurses
 brew install ncurses
 ```
 **Windows**
-You can install `ncurses` by using [Cygwin](https://www.cygwin.com/), just select right package and install it.  
+For Windows users, you can build this project using [Cygwin](https://www.cygwin.com/).
+Packages:
+```
+ncurses
+libiconv
+```
 
 ### Steps
 1. Clone this repository
