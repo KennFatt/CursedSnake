@@ -17,8 +17,9 @@ public:
     uint32_t WINDOW_W;
     /** WINDOW_H is a console Height */
     uint32_t WINDOW_H;
-
+    /** X Center */
     uint32_t WINDOW_W_CENTER;
+    /** Y Center */
     uint32_t WINDOW_H_CENTER;
 
     /**
@@ -54,6 +55,7 @@ private:
     /** Total points achived by the player */
     uint32_t points;
 
+    /** Banner flag */
     bool isBannerShown;
 
     /**
@@ -65,8 +67,6 @@ private:
      * Till exit signal is interrupted.
      */
     const uint32_t RENDER_DELTA_TIME = 110000;
-
-    void showBanner();
 
     /**
      * Setup all used object before it got rendered to the main screen.
@@ -89,6 +89,11 @@ private:
      * Trigerring a game over state and stop the game.
      */
     void onGameOver();
+
+    /**
+     * Show game first interface
+     */
+    void onShowBanner();
 
     /**
      * Finally, clean-up all the mess or garbage.

@@ -1,12 +1,11 @@
 #include "snake.h"
 
-#include "../appdelegate.h"
-
-Snake::Snake(const char ch, const AppDelegate* app)
+Snake::Snake(const char ch, const uint32_t* _w, const uint32_t* _h)
     : Entity(ch, -1.0, -1.0) {
     length = 0;
-    application = app;
-    parts.push_back(Vector2(app->WINDOW_W_CENTER, app->WINDOW_H_CENTER));
+    WINDOW_W = _w;
+    WINDOW_H = _h;
+    parts.push_back(Vector2((*_w) / 2, (*_h) / 2));
 }
 
 const char Snake::getCharacter() const {
@@ -31,16 +30,16 @@ void Snake::onTick() {
     }
 
     /** Border validation */
-    if (parts[0].x > application->WINDOW_W) {
+    if (parts[0].x > *WINDOW_W) {
         parts[0].x = 0;
     } else if (parts[0].x < 0) {
-        parts[0].x = application->WINDOW_W - 1;
+        parts[0].x = *WINDOW_W - 1;
     }
 
-    if (parts[0].y > application->WINDOW_H) {
+    if (parts[0].y > *WINDOW_H) {
         parts[0].y = 0;
     } else if (parts[0].y < 0) {
-        parts[0].y = application->WINDOW_H - 1;
+        parts[0].y = *WINDOW_H - 1;
     }
 }
 

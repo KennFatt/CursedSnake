@@ -10,12 +10,6 @@
 #include "food.h"
 
 /**
- * Empty class to prevent circular dependencies.
- * @link https://stackoverflow.com/q/625799/6569706
- */
-class AppDelegate;
-
-/**
  * Snake class
  */
 class Snake : public Entity {
@@ -29,8 +23,9 @@ private:
     /** Store its body (parts) as a dynamic array of Vector2 */
     std::vector<Vector2> parts;
 
-    /** Pointer of application */
-    const AppDelegate* application;
+    /** Main screen window's width and height */
+    const uint32_t* WINDOW_W;
+    const uint32_t* WINDOW_H;
 
 public:
     /**
@@ -39,7 +34,7 @@ public:
      *
      * @param ch Food character
      */
-    Snake(const char ch, const AppDelegate* app);
+    Snake(const char ch, const uint32_t* _w, const uint32_t* _h);
 
     /**
      * Get class's character.
