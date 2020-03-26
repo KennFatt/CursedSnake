@@ -81,3 +81,5 @@ void Snake::updateDirection(
         currentDirection = newDirection;
     }
 }
+
+Snake::~Snake() {}

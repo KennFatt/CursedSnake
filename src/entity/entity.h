@@ -37,6 +37,11 @@ public:
      * Tick entity instance for each buffer.
      */
     virtual void onTick() = 0;
+
+    /**
+     * Virtual destructor.
+     */
+    virtual ~Entity(){};
 };
 
 #endif    // __ENTITY_H

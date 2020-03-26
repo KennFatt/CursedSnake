@@ -26,6 +26,11 @@ public:
      * TODO: Interactively change its color every tick.
      */
     void onTick();
+
+    /**
+     * Class destructor.
+     */
+    ~Food();
 };
 
 #endif    // __FOOD_H

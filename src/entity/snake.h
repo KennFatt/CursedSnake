@@ -89,6 +89,11 @@ public:
      * Update snake's facing direction.
      */
     void updateDirection(const FacingDirection::WindDirection& newDirection);
+
+    /**
+     * Class destructor.
+     */
+    ~Snake();
 };
 
 #endif    // __SNAKE_H

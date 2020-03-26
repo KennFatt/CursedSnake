@@ -7,6 +7,6 @@ const char Food::getCharacter() const {
     return character;
 }
 
-void Food::onTick() {
-    // TODO:
-}
+void Food::onTick() {}
+
+Food::~Food() {}
