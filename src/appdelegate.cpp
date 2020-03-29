@@ -112,6 +112,9 @@ void AppDelegate::onRender() {
             continue;
         }
 
+        /** Update snake's body part and control its movement */
+        snake->onTick();
+
         /** Get snake body parts */
         auto& snakeParts = snake->getParts();
         /**
@@ -128,9 +131,6 @@ void AppDelegate::onRender() {
             snake->getParts().pop_back();
         }
 
-        /** Update snake's body part and control its movement */
-        snake->onTick();
-
         /**
          * Render each body parts to the screen
          * and also check if the head collided with its own body.
@@ -142,6 +142,14 @@ void AppDelegate::onRender() {
             }
 
             /** Rendering */
+            if (i == 0) {
+                /** Let the head have different color */
+                attron(COLOR_PAIR(4));
+                mvaddch(snakeParts[i].y, snakeParts[i].x,
+                        snake->getCharacter());
+                attroff(COLOR_PAIR(4));
+                continue;
+            }
             attron(A_BOLD | COLOR_PAIR(4));
             mvaddch(snakeParts[i].y, snakeParts[i].x, snake->getCharacter());
             attroff(A_BOLD | COLOR_PAIR(4));
@@ -192,7 +200,6 @@ void AppDelegate::onKeyPressed() {
 }
 
 void AppDelegate::onShowBanner() {
-    // TODO: Move it somewhere else to prevent being instantiate every time
     const std::array<const char*, 3> authors = {
        "Arvito Putra", "Kennan Fattahillah", "Sahla Dzulfika"};
     const std::array<const char*, 6> ascii = {
@@ -204,7 +211,6 @@ void AppDelegate::onShowBanner() {
        "|_|\\__,_|_|\\_\\___|",
        "                                                          "};
 
-    // TODO: What would happend if there is no more space to print ASCII?
     if (WINDOW_W >= 60) {
         for (unsigned i = 0; i < ascii.size(); i++) {
             attron(A_BOLD | COLOR_PAIR(1));
@@ -252,7 +258,6 @@ void AppDelegate::onGameOver() {
                 attroff(A_BOLD | A_BLINK | COLOR_PAIR(3));
             }
         }
-        // TODO: What would happend if there is no more space to print ASCII?
 
         attron(COLOR_PAIR(4));
         mvprintw(WINDOW_H_CENTER + 2, WINDOW_W_CENTER - 12,
